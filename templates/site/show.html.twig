@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Site{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Site de {{ site.name }}</h1>
+    {{ site.address }} <br>
+    {{ site.zipCode }} {{ site.city }}
+
+    <div id="map" style="height: 500px"></div><br>
+
+    <a href="{{ path('site_edit', {'id': site.id}) }}" class="btn btn-warning" style="color: #FFF;">Modifier</a>
+    {{ include('site/_delete_form.html.twig') }}
+    <a href="{{ path('admin_index') }}" class="btn btn-secondary">Retour</a>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function initMap() {
+            geocoder = new google.maps.Geocoder();
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8
+            });
+
+            var address = "{{ site.address }} {{ site.zipCode }} {{ site.city }}";
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status === 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9uEFirvnUdPMxopezb8bbwwn1iNsO72U&callback=initMap"
+            async defer></script>
+{% endblock %}

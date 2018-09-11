@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau site{% endblock %}
+
+{% block body %}
+    <h1>Ajout d'un nouveau site</h1>
+    <div class="col-md-3">
+        {{ include('site/_form.html.twig') }}
+    </div>
+{% endblock %}

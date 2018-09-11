@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier site{% endblock %}
+
+{% block body %}
+    <h1>Modifier un site</h1>
+    <div class="col-md-3">
+        {{ include('site/_form.html.twig', {'button_label': 'Modifier'}) }}
+    </div>
+{% endblock %}
