@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New UserMailingList{% endblock %}
+
+{% block body %}
+    <h1>Create new UserMailingList</h1>
+
+    {{ include('user_mailing_list/_form.html.twig') }}
+
+    <a href="{{ path('user_mailing_list_index') }}">back to list</a>
+{% endblock %}
