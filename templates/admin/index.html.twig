@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container"><br>
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Sites
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse {% if "category" not in app.request.headers.get('referer') and "civility" not in app.request.headers.get('referer') %}show{% endif %}" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        {{ render(controller(
+                            'App\\Controller\\SiteController::index'
+                        )) }}
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Catégories
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse {% if "category" in app.request.headers.get('referer') %}show{% endif %}" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        {{ render(controller(
+                            'App\\Controller\\CategoryController::index'
+                        )) }}
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Civilités
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseThree" class="collapse {% if "civility" in app.request.headers.get('referer') %}show{% endif %}" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+                        {{ render(controller(
+                            'App\\Controller\\CivilityController::index'
+                        )) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    </script>
+{% endblock %}
