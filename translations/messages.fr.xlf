@@ -22,6 +22,10 @@
                 <source>City</source>
                 <target>Commune</target>
             </trans-unit>
+            <trans-unit id="placeName">
+                <source>Place name</source>
+                <target>Établissement</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

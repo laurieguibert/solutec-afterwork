@@ -14,13 +14,41 @@ class AfterworkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('date', DateTimeType::class, [
-                'widget' => 'single_text'
+            ->add('name', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'Nom de l\'afterwork'
+                ]
             ])
-            ->add('address', TextType::class)
-            ->add('zipCode', TextType::class)
-            ->add('city', TextType::class)
+            ->add('date', DateTimeType::class, [
+                'widget' => 'single_text',
+                'label' => 'Date de l\'évènement',
+                'label_attr' => [
+                    'style' => 'font-size :14px; color : lightslategrey'
+                ],
+                'attr' => [
+                    'style' => 'font-size :14px; color : lightslategrey'
+                ]
+            ])
+            ->add('placeName', TextType::class, [
+                'attr' => array(
+                    'placeholder' => 'Lieu (nom du restaurant, du bar, ...)'
+                )
+            ])
+            ->add('address', TextType::class, [
+                'attr' => array(
+                    'placeholder' => 'Adresse'
+                )
+            ])
+            ->add('zipCode', TextType::class, [
+                'attr' => array(
+                    'placeholder' => 'Code postal'
+                )
+            ])
+            ->add('city', TextType::class, [
+                'attr' => array(
+                    'placeholder' => 'Ville'
+                )
+            ])
         ;
     }
 

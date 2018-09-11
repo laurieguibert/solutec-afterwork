@@ -2,9 +2,21 @@
 
 {% block title %}Nouvel afterwork{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/new_afterwork.css"/>
+{% endblock %}
+
 {% block body %}
-    <h1>Création d'un afterwork</h1>
-    <div class="col-md-4">
-        {{ include('afterwork/_form.html.twig') }}
+    <div class="container">
+        <div class="login-form">
+            <div class="main-div">
+                <div class="panel text-center">
+                    <h1>Création d'afterwork</h1>
+                    <p>Please enter your email and password</p>
+                </div>
+                {{ include('afterwork/_new_form.html.twig') }}
+            </div>
+        </div>
     </div>
 {% endblock %}

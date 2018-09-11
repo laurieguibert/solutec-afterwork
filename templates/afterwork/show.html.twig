@@ -13,12 +13,15 @@
         <div class="col-md-6 px-0 jumbotron-content">
             <h1 class="display-4 font-italic">{{ afterwork.name }}</h1>
             <p class="lead my-3">Date de l'afterwork : le {{ afterwork.date.format("l j F \\à H") }}h{% if afterwork.date.format("i") != "00" %}{{ afterwork.date.format("i") }}{% endif %}.</p>
-            <p class="lead mb-0">Lieu de l'afterwork : <i>{{ afterwork.placeName }}, {{ afterwork.address }}, {{ afterwork.zipCode }} {{ afterwork.city }}</i></p>
+            <p class="lead mb-0">Lieu de l'afterwork : <i>{{ afterwork.placeName }}, {{ afterwork.address }}, {{ afterwork.zipCode }} {{ afterwork.city }}</i></p><br>
+            {% if afterwork.date.format("d/m/Y") > "now"|date("d/m/Y") %}
+                {{ include('afterwork/_delete_form.html.twig') }}
+            {% endif %}
         </div>
     </div>
 
     <div class="container">
-        <h5 class="section-title h1" style="font-family: 'Lobster', cursive;">Les participants</h5>
+        <h5 class="section-title h1" style="font-family: 'Lobster', cursive;">Les invités</h5>
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <div class="card">
@@ -26,7 +29,28 @@
                         <div class="img">
                             <img src="https://www.planwallpaper.com/static/images/cool-wallpaper-5_G6Qe1wU.jpg">
                         </div>
-                        <h2>Laurie GUIBERT<br><span>Participe</span></h2>
+                        <h2>Laurie GUIBERT<br><span style="background-color: green;">Participe</span></h2>
+                        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et.</p>
+                        <span>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                        </ul>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="card">
+                    <div class="box">
+                        <div class="img">
+                            <img src="https://www.planwallpaper.com/static/images/cool-wallpaper-5_G6Qe1wU.jpg">
+                        </div>
+                        <h2>Laurie GUIBERT<br><span>Ne participe pas</span></h2>
                         <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                             tempor incididunt ut labore et.</p>
                         <span>
@@ -43,7 +67,4 @@
             </div>
         </div>
     </div>
-    {% if afterwork.date.format("d/m/Y") > "now"|date("d/m/Y") %}
-        {{ include('afterwork/_delete_form.html.twig') }}
-    {% endif %}
 {% endblock %}

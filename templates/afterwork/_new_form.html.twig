@@ -1,0 +1,11 @@
+{{ form_start(form) }}
+    {{ form_label(form.date) }}
+    {{ form_widget(form.date) }}
+    {{ form_widget(form.name) }}
+    {{ form_widget(form.placeName) }}
+    {{ form_widget(form.address) }}
+    {{ form_widget(form.zipCode) }}
+    {{ form_widget(form.city) }}
+    <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
+    <a href="{{ path('afterwork_index') }}" class="btn btn-secondary">Retour</a>
+{{ form_end(form) }}
