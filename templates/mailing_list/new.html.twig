@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New MailingList{% endblock %}
+
+{% block body %}
+    <h1>Create new MailingList</h1>
+
+    {{ include('mailing_list/_form.html.twig') }}
+
+    <a href="{{ path('mailing_list_index') }}">back to list</a>
+{% endblock %}
