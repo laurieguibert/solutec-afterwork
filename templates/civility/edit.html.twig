@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier civilité{% endblock %}
+
+{% block body %}
+    <h1>Modifier une civilité</h1>
+    <div class="col-md-2">
+        {{ include('civility/_form.html.twig', {'button_label': 'Modifier'}) }}
+    </div>
+{% endblock %}
