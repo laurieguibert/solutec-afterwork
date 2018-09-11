@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Afterwork index{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/main.css"/>
+{% endblock %}
+{% block body %}
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <h1 style="font-family: 'Lobster', cursive;">Nos afterworks</h1>
+            <div class="row">
+                {% for afterwork in afterworks %}
+                        <div class="col-md-4">
+                            <div class="card mb-4 box-shadow">
+                                <img class="card-img-top" src="/images/wine.jpg" alt="Card image cap" style="height: 250px;">
+                                <div class="card-body text-center">
+                                    <p class="card-text"><b>{{ afterwork.name }}</b></p>
+                                    <p class="card-text">Le {{ afterwork.date.format("d/m/Y à H:i") }}</p>
+                                    <p class="card-text"><i>{{ afterwork.placeName }}<br>{{ afterwork.address }} <br> {{ afterwork.zipCode }} {{ afterwork.city }}</i></p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        {% if afterwork.date.format("d/m/Y") < "now"|date("d/m/Y") %}
+                                            <div class="btn-group">
+                                                <a href="{{ path('afterwork_show', {'id': afterwork.id}) }}" style="color: white;"><button type="button" class="btn btn-sm btn-secondary"><i class="fa fa-search"></i></button></a>
+                                            </div>
+                                            <small class="text-muted">Terminé</small>
+                                        {% else %}
+                                            <div class="btn-group">
+                                                <a href="{{ path('afterwork_show', {'id': afterwork.id}) }}" style="color: white;"><button type="button" class="btn btn-sm btn-secondary" style="border-top-right-radius: 0; border-bottom-right-radius: 0;"><i class="fa fa-search"></i></button></a>
+                                                <a href="{{ path('afterwork_edit', {'id': afterwork.id}) }}" style="color: white;"><button type="button" class="btn btn-sm btn-secondary" style="border-top-left-radius: 0; border-bottom-left-radius: 0;"><i class="fa fa-pencil"></i></button></a>
+                                            </div>
+                                            <small class="text-muted">A venir</small>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                {% endfor %}
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <img class="card-img-top" src="/images/next.jpg" alt="Card image cap" style="height: 250px;">
+                        <div class="card-body text-center">
+                            <br><p class="card-text">Une nouvelle sortie en tête ? </p><br>
+                                <div class="btn-group">
+                                    <a href="{{ path('afterwork_new') }}" class="btn" style="color:white; background-color: #6c757d;">Créer un afterwork</a>
+                                </div>
+                            <br><br><br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="map" style="height: 500px;"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function initMap() {
+            geocoder = new google.maps.Geocoder();
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12
+            });
+
+            var adresses = [];
+            var infowindows = [];
+
+            {% for afterwork in afterworks %}
+                adresses.push("{{ afterwork.address }} {{ afterwork.zipCode }} {{ afterwork.city }}");
+            {% endfor %}
+
+            for (var x = 0; x < adresses.length; x++) {
+                geocoder.geocode({'address': adresses[x]}, function (results, status) {
+                    if (status === 'OK') {
+                        map.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location
+                        });
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+            }
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD9uEFirvnUdPMxopezb8bbwwn1iNsO72U&callback=initMap"
+            async defer></script>
+{% endblock %}

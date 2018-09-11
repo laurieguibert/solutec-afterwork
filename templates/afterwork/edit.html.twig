@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Afterwork{% endblock %}
+
+{% block body %}
+    <h1>Edit Afterwork</h1>
+
+    {{ include('afterwork/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('afterwork_index') }}">back to list</a>
+
+    {{ include('afterwork/_delete_form.html.twig') }}
+{% endblock %}
