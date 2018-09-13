@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class AfterworkType extends AbstractType
+class NewAfterworkType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -31,8 +31,7 @@ class AfterworkType extends AbstractType
                 ],
                 'attr' => [
                     'style' => 'font-size :14px; color : lightslategrey'
-                ],
-                'format' => 'dd/MM/yyyy H:mm',
+                ]
             ])
             ->add('placeName', TextType::class, [
                 'attr' => array(

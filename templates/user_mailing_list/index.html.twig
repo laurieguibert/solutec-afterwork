@@ -18,6 +18,8 @@
             <tr>
                 <td>{{ user_mailing_list.id }}</td>
                 <td>{{ user_mailing_list.createdAt ? user_mailing_list.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ user_mailing_list.user.fullName }}</td>
+                <td>{{ user_mailing_list.mailingList.name }}</td>
                 <td>
                     <a href="{{ path('user_mailing_list_show', {'id': user_mailing_list.id}) }}">show</a>
                     <a href="{{ path('user_mailing_list_edit', {'id': user_mailing_list.id}) }}">edit</a>

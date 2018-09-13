@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Afterwork;
 use App\Form\AfterworkType;
+use App\Form\NewAfterworkType;
 use App\Repository\AfterworkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,7 @@ class AfterworkController extends Controller
      */
     public function index(AfterworkRepository $afterworkRepository): Response
     {
-        return $this->render('afterwork/index.html.twig', ['afterworks' => $afterworkRepository->findAll()]);
+        return $this->render('afterwork/index.html.twig', ['afterworks' => $afterworkRepository->findBy([], ['date' => 'DESC'])]);
     }
 
     /**
@@ -29,7 +30,7 @@ class AfterworkController extends Controller
     public function new(Request $request): Response
     {
         $afterwork = new Afterwork();
-        $form = $this->createForm(AfterworkType::class, $afterwork);
+        $form = $this->createForm(NewAfterworkType::class, $afterwork);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -65,7 +66,7 @@ class AfterworkController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('afterwork_edit', ['id' => $afterwork->getId()]);
+            return $this->redirectToRoute('afterwork_index');
         }
 
         return $this->render('afterwork/edit.html.twig', [

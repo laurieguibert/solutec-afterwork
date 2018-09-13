@@ -16,11 +16,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class MailingListController extends Controller
 {
     /**
-     * @Route("/", name="mailing_list_index", methods="GET")
+     * @Route("/", name="mailing_list_index", methods="GET|POST")
      */
-    public function index(MailingListRepository $mailingListRepository): Response
+    public function index(Request $request, MailingListRepository $mailingListRepository): Response
     {
-        return $this->render('mailing_list/index.html.twig', ['mailing_lists' => $mailingListRepository->findAll()]);
+        $mailingList = new MailingList();
+        $form = $this->createForm(MailingListType::class, $mailingList);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($mailingList);
+            $em->flush();
+
+            return $this->redirectToRoute('mailing_list_index');
+        }
+
+        return $this->render('mailing_list/index.html.twig', [
+            'mailing_lists' => $mailingListRepository->findAll(),
+            'form' => $form->createView()
+            ]);
     }
 
     /**
@@ -68,8 +83,11 @@ class MailingListController extends Controller
             return $this->redirectToRoute('mailing_list_edit', ['id' => $mailingList->getId()]);
         }
 
+        $users = $this->getDoctrine()->getRepository('App:User')->findAll();
+
         return $this->render('mailing_list/edit.html.twig', [
             'mailing_list' => $mailingList,
+            'users' => $users,
             'form' => $form->createView(),
         ]);
     }

@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 {% block body %}
     <div class="container"><br>
         <div class="accordion" id="accordionExample">
@@ -48,6 +50,22 @@
                     <div class="card-body">
                         {{ render(controller(
                             'App\\Controller\\CivilityController::index'
+                        )) }}
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingFour">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Templates de mail
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseFour" class="collapse {% if "template" in app.request.headers.get('referer') %}show{% endif %}" aria-labelledby="headingFour" data-parent="#accordionExample">
+                    <div class="card-body">
+                        {{ render(controller(
+                            'App\\Controller\\TemplateController::index'
                         )) }}
                     </div>
                 </div>

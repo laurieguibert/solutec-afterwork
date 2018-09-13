@@ -5,9 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @Vich\Uploadable
  */
 class User
 {
@@ -46,6 +50,13 @@ class User
 
     /**
      * @ORM\Column(type="string", length=15, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/^0[1-9][0-9]{8}$/", message="Le numéro de téléphone ne peut contenir que des chiffres."
+     * )
+     * @Assert\Length(
+     *      min =10,
+     *      max = 10
+     * )
      */
     private $phone;
 
@@ -55,9 +66,27 @@ class User
      */
     private $site;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @var string
+     */
+    private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="user_images", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->userMailingLists = new ArrayCollection();
+        $this->updatedAt = null;
     }
 
     public function getId(): ?int
@@ -166,5 +195,33 @@ class User
         $this->site = $site;
 
         return $this;
+    }
+
+    public function getFullName(): ?string {
+        return $this->firstName . ' ' . $this->lastName;
+    }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        if ($image) {
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
     }
 }
