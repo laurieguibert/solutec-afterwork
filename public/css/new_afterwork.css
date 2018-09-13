@@ -1,5 +1,9 @@
 body{
-    background:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg") no-repeat center;
+    background:url("https://hdwallsource.com/img/2014/9/subtle-blur-wallpaper-26338-27029-hd-wallpapers.jpg") no-repeat center;
+}
+
+.container{
+    margin-top:3%;
 }
 
 .form-heading {
@@ -55,4 +59,14 @@ body{
 
 .login-form .btn.btn-primary.reset {
     background: #ff9900 none repeat scroll 0 0;
+}
+
+.vich-image a img {
+    height:50%;
+    width:50%;
+}
+
+.vich-image a  {
+    color: darkorange;
+    margin-left: 10px;
 }

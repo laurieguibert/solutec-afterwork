@@ -1,4 +1,13 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_row(form.civility) }}
+    {{ form_widget(form.firstName) }}
+    {{ form_widget(form.lastName) }}
+    {{ form_widget(form.email) }}
+    {{ form_errors(form.email) }}
+    {{ form_widget(form.phone) }}
+    {{ form_errors(form.phone) }}
+    {{ form_row(form.site) }}
+    {{ form_row(form.imageFile) }}
+<button class="btn btn-success float-right">{{ button_label|default('Enregistrer') }}</button>
+<a href="{{ path('user_index') }}" class="btn btn-secondary float-left">Retour</a>
 {{ form_end(form) }}

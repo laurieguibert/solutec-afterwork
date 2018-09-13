@@ -1,13 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Afterwork{% endblock %}
+{% block title %}Modifier afterwork{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/new_afterwork.css"/>
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Afterwork</h1>
-
-    {{ include('afterwork/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('afterwork_index') }}">back to list</a>
-
-    {{ include('afterwork/_delete_form.html.twig') }}
+<div class="container">
+    <div class="login-form">
+        <div class="main-div">
+            <div class="panel text-center">
+                <h1>Modifier l'afterwork</h1>
+                <p>Merci de remplir tous les champs</p>
+            </div>
+            {{ include('afterwork/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+        </div>
+    </div>
+</div>
 {% endblock %}

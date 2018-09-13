@@ -8,12 +8,17 @@
 {% block body %}
     <div class="album py-5 bg-light">
         <div class="container">
-            <h1 style="font-family: 'Lobster', cursive;">Nos afterworks</h1>
+            <h1 class="lobster">Nos afterworks</h1>
+            <div id="map" style="height: 500px; margin-bottom: 20px;"></div>
             <div class="row">
                 {% for afterwork in afterworks %}
                         <div class="col-md-4">
                             <div class="card mb-4 box-shadow">
-                                <img class="card-img-top" src="/images/wine.jpg" alt="Card image cap" style="height: 250px;">
+                                {% if afterwork.image %}
+                                    <img class="card-img-top" src="{{ vich_uploader_asset(afterwork, 'imageFile') }}" style="height: 250px;">
+                                {% else %}
+                                    <img class="card-img-top" src="/images/wine.jpg" style="height: 250px;">
+                                {% endif %}
                                 <div class="card-body text-center">
                                     <p class="card-text"><b>{{ afterwork.name }}</b></p>
                                     <p class="card-text">Le {{ afterwork.date.format("d/m/Y à H:i") }}</p>
@@ -49,7 +54,6 @@
                     </div>
                 </div>
             </div>
-            <div id="map" style="height: 500px;"></div>
         </div>
     </div>
 {% endblock %}
