@@ -6,6 +6,7 @@ use App\Entity\Template;
 use App\Form\TemplateType;
 use App\Repository\TemplateRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,9 +16,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TemplateController extends Controller
 {
-    /**
-     * @Route("/", name="template_index", methods="GET")
-     */
     public function index(TemplateRepository $templateRepository): Response
     {
         return $this->render('template/index.html.twig', ['templates' => $templateRepository->findAll()]);
@@ -37,7 +35,10 @@ class TemplateController extends Controller
             $em->persist($template);
             $em->flush();
 
-            return $this->redirectToRoute('template_index');
+            $fileSystem = new Filesystem();
+            $fileSystem->dumpFile($this->get('kernel')->getRootDir() . "/../templates/emails/" . str_replace(' ', '_', $template->getName()) . ".html.twig", $template->getBody());
+
+            return $this->redirectToRoute('admin_index');
         }
 
         return $this->render('template/new.html.twig', [
@@ -65,7 +66,7 @@ class TemplateController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('template_edit', ['id' => $template->getId()]);
+            return $this->redirectToRoute('admin_index');
         }
 
         return $this->render('template/edit.html.twig', [
@@ -85,6 +86,6 @@ class TemplateController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('template_index');
+        return $this->redirectToRoute('admin_index');
     }
 }

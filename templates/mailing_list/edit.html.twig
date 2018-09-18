@@ -4,39 +4,23 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="/css/bootstrap-duallistbox.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/new_afterwork.css"/>
 {% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1>Modifier la liste de diffusion</h1>
-
-        {{ include('mailing_list/_form.html.twig', {'button_label': 'Enregistrer'}) }}
-
-        <select multiple="multiple" size="10" name="duallistbox_demo1">
-            {% for userMailingList in mailing_list.userMailingLists %}
-                <option value="{{ userMailingList.user.fullName }}" selected="selected">{{ userMailingList.user.fullName }} / {{ userMailingList.user.email }}</option>
-            {% endfor %}
-            {% for user in users %}
-                <option value="option2">{{ user.firstName }}</option>
-            {% endfor %}
-        </select>
-
-        <a href="{{ path('mailing_list_index') }}" class="btn btn-secondary">Retour</a>
-
-        {{ include('mailing_list/_delete_form.html.twig') }}
+        <div class="login-form">
+            <div class="main-div">
+                <div class="panel text-center">
+                    <h1>Modifier la liste de diffusion</h1>
+                    <p>Les champs précédés d'un astérisque sont obligatoires.</p>
+                </div>
+                {{ include('mailing_list/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+            </div>
+        </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="/js/jquery.bootstrap-duallistbox.js"></script>
-    <script>
-        $('[name=duallistbox_demo1]').bootstrapDualListbox({
-            infoText: '{0} utilisateurs',
-            infoTextFiltered: '<span class="badge badge-warning">Filtré</span> {0} sur {1}',
-            infoTextEmpty: 'Pas d\'utilisateur',
-            filterPlaceHolder: 'Filtre'
-        });
-    </script>
 {% endblock %}

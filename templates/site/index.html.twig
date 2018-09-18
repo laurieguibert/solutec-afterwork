@@ -16,8 +16,8 @@
             <td>{{ site.name }}</td>
             <td>{{ site.address }}<br>{{ site.zipCode }} {{ site.city }}</td>
             <td>
-                <a href="{{ path('site_show', {'id': site.id}) }}" class="btn btn-primary">Afficher</a>
-                <a href="{{ path('site_edit', {'id': site.id}) }}" class="btn btn-warning" style="color: #FFF;">Modifier</a>
+                <a href="{{ path('site_show', {'id': site.id}) }}" class="btn btn-primary btn-sm">Afficher</a>
+                <a href="{{ path('site_edit', {'id': site.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
                 {{ include('site/_delete_form.html.twig') }}
             </td>
         </tr>
@@ -29,4 +29,4 @@
     </tbody>
 </table>
 
-<a href="{{ path('site_new') }}" class="btn btn-success">Ajouter un site</a>
+<a href="{{ path('site_new') }}" class="btn btn-success btn-sm">Ajouter un site</a>

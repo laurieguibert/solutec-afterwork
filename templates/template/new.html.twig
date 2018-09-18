@@ -1,11 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Template{% endblock %}
+{% block title %}Créer template{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/new_afterwork.css"/>
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Template</h1>
+    <div class="container">
+        <div class="login-form">
+            <div class="main-div" style="max-width:100%">
+                <div class="panel text-center">
+                    <h1>Création d'un template</h1>
+                    <p>Les champs précédés d'un astérisque sont obligatoires.</p>
+                </div>
+                {{ include('template/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
 
-    {{ include('template/_form.html.twig') }}
-
-    <a href="{{ path('template_index') }}">back to list</a>
 {% endblock %}

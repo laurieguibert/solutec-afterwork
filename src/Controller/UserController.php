@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index(UserRepository $userRepository): Response
     {
-        return $this->render('user/index.html.twig', ['users' => $userRepository->findAll()]);
+        return $this->render('user/index.html.twig', ['users' => $userRepository->findBy([], ['lastName' => 'ASC'])]);
     }
 
     /**
@@ -65,7 +65,7 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
+            return $this->redirectToRoute('user_index');
         }
 
         return $this->render('user/edit.html.twig', [

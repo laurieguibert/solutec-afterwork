@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}AFTERWORKS{% endblock %}</title>
-        <link rel="icon" type="image/png" href="/images/favicon.png" />
+        <link rel="icon" type="image/png" href="/images/default/favicon.png" />
         {% block stylesheets %}
             <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
             <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"/>
@@ -15,23 +15,20 @@
     <body>
         {% block navbar %}
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <img class="navbar-brand" id="logo" src="/images/logo_bis.png"/>
+                <img class="navbar-brand" id="logo" src="/images/default/logo_bis.png"/>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item {{ app.request.get('_route') == 'user_index' ? 'active' }}">
-                            <a class="nav-link" href="{{ path('user_index') }}">Users <span class="sr-only">(current)</span></a>
+                        <li class="nav-item {{ app.request.get('_route') == 'afterwork_index' ? 'active' }}">
+                            <a class="nav-link" href="{{ path('afterwork_index') }}">Afterworks <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item {{ app.request.get('_route') == 'campaign_index' ? 'active' }}">
-                            <a class="nav-link" href="#">Campaigns</a>
+                            <a class="nav-link" href="{{ path('campaign_index') }}">Campagnes de mailing</a>
                         </li>
-                        <li class="nav-item {{ app.request.get('_route') == 'afterwork_index' ? 'active' }}">
-                            <a class="nav-link" href="{{ path('afterwork_index') }}">Afterworks</a>
-                        </li>
-                        <li class="nav-item {{ app.request.get('_route') == 'mailing_list_index' ? 'active' }}">
-                            <a class="nav-link" href="{{ path('mailing_list_index') }}">Liste de diffusions</a>
+                        <li class="nav-item {{ app.request.get('_route') == 'user_index' ? 'active' }}">
+                            <a class="nav-link" href="{{ path('user_index') }}">Utilisateurs</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
@@ -48,7 +45,7 @@
         {% block body %}
         {% endblock %}
         {% block javascripts %}
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
             <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
             <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>

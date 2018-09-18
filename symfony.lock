@@ -134,6 +134,9 @@
             "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
         }
     },
+    "snapappointments/bootstrap-select": {
+        "version": "v1.13.2"
+    },
     "swiftmailer/swiftmailer": {
         "version": "v6.1.2"
     },

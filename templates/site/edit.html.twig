@@ -2,9 +2,20 @@
 
 {% block title %}Modifier site{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/new_afterwork.css"/>
+{% endblock %}
+
 {% block body %}
-    <h1>Modifier un site</h1>
-    <div class="col-md-3">
-        {{ include('site/_form.html.twig', {'button_label': 'Modifier'}) }}
+<div class="container">
+    <div class="login-form">
+        <div class="main-div">
+            <div class="panel text-center">
+                <h1>Modifier un site</h1>
+            </div>
+            {{ include('site/_form.html.twig', {'button_label': 'Modifier'}) }}
+        </div>
     </div>
+</div>
 {% endblock %}

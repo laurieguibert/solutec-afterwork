@@ -1,13 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Template{% endblock %}
+{% block title %}Modifier template {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/new_afterwork.css"/>
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Template</h1>
-
-    {{ include('template/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('template_index') }}">back to list</a>
-
-    {{ include('template/_delete_form.html.twig') }}
+    <div class="container">
+        <div class="login-form">
+            <div class="main-div" style="max-width:100%">
+                <div class="panel text-center">
+                    <h1>Modifier le template</h1>
+                    <p>Les champs précédés d'un astérisque sont obligatoires.</p>
+                </div>
+                {{ include('template/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

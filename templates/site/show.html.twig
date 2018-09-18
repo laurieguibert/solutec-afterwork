@@ -10,9 +10,9 @@
 
     <div id="map" style="height: 500px"></div><br>
 
-    <a href="{{ path('site_edit', {'id': site.id}) }}" class="btn btn-warning" style="color: #FFF;">Modifier</a>
+    <a href="{{ path('site_edit', {'id': site.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
     {{ include('site/_delete_form.html.twig') }}
-    <a href="{{ path('admin_index') }}" class="btn btn-secondary">Retour</a>
+    <a href="{{ path('admin_index') }}" class="btn btn-secondary btn-sm">Retour</a>
 
     </div>
 {% endblock %}

@@ -34,14 +34,20 @@ class MailingList
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserMailingList", mappedBy="mailingList")
+     * @ORM\OneToMany(targetEntity="App\Entity\Campaign", mappedBy="mailingList")
      */
-    private $userMailingLists;
+    private $campaigns;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="mailingLists")
+     */
+    private $users;
 
     public function __construct()
     {
-        $this->userMailingLists = new ArrayCollection();
         $this->createdAt = new \DateTime("now");
+        $this->campaigns = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,31 +92,57 @@ class MailingList
     }
 
     /**
-     * @return Collection|UserMailingList[]
+     * @return Collection|Campaign[]
      */
-    public function getUserMailingLists(): Collection
+    public function getCampaigns(): Collection
     {
-        return $this->userMailingLists;
+        return $this->campaigns;
     }
 
-    public function addUserMailingList(UserMailingList $userMailingList): self
+    public function addCampaign(Campaign $campaign): self
     {
-        if (!$this->userMailingLists->contains($userMailingList)) {
-            $this->userMailingLists[] = $userMailingList;
-            $userMailingList->setMailingList($this);
+        if (!$this->campaigns->contains($campaign)) {
+            $this->campaigns[] = $campaign;
+            $campaign->setMailingList($this);
         }
 
         return $this;
     }
 
-    public function removeUserMailingList(UserMailingList $userMailingList): self
+    public function removeCampaign(Campaign $campaign): self
     {
-        if ($this->userMailingLists->contains($userMailingList)) {
-            $this->userMailingLists->removeElement($userMailingList);
+        if ($this->campaigns->contains($campaign)) {
+            $this->campaigns->removeElement($campaign);
             // set the owning side to null (unless already changed)
-            if ($userMailingList->getMailingList() === $this) {
-                $userMailingList->setMailingList(null);
+            if ($campaign->getMailingList() === $this) {
+                $campaign->setMailingList(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
         }
 
         return $this;

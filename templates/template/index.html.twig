@@ -4,10 +4,10 @@
     <thead>
         <tr>
             <th>Id</th>
-            <th>Name</th>
-            <th>Object</th>
-            <th>Body</th>
-            <th>actions</th>
+            <th>Nom</th>
+            <th>Objet</th>
+            <th>Contenu</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -16,10 +16,10 @@
             <td>{{ template.id }}</td>
             <td>{{ template.name }}</td>
             <td>{{ template.object }}</td>
-            <td>{{ template.body }}</td>
+            <td>{{ template.body|raw}}</td>
             <td>
-                <a href="{{ path('template_show', {'id': template.id}) }}">show</a>
-                <a href="{{ path('template_edit', {'id': template.id}) }}">edit</a>
+                <a href="{{ path('template_edit', {'id': template.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                {{ include('template/_delete_form.html.twig') }}
             </td>
         </tr>
     {% else %}
@@ -30,4 +30,4 @@
     </tbody>
 </table>
 
-<a href="{{ path('template_new') }}">Create new</a>
+<a href="{{ path('template_new') }}" class="btn btn-success btn-sm">Ajouter un template</a>

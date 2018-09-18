@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer campagne{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/new_afterwork.css"/>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="login-form">
+            <div class="main-div" style="max-width: 100%;">
+                <div class="panel text-center">
+                    <h1>Lancer une campagne</h1>
+                    <p>Les champs précédés d'un astérisque sont obligatoires.</p>
+                </div>
+                {{ include('campaign/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.getElementById('campaign_template').parentNode.style.display='none';
+        document.getElementById('campaign_templateContent').parentNode.style.display='none';
+        document.getElementById('campaign_newTemplate').parentNode.style.display='none';
+        $('#campaign_mailingList').change(function(){
+            $('#campaign_users option:selected').removeAttr("selected");
+
+            var id = this.value;
+            {% for mailingList in mailingLists %}
+                if({{ mailingList.id }} == id)
+                {
+                    {% for user in mailingList.users %}
+                        console.log({{ user.id }});
+                        $("#campaign_users option[value='{{ user.id }}']").attr("selected","selected");
+                    {% endfor %}
+                }
+            {% endfor %}
+        });
+
+        $('#campaign_category').change(function () {
+            document.getElementById('campaign_template').parentNode.style.display='inline';
+            var category = $(this);
+            $("#campaign_template").prepend($('<option></option>').html('Chargement...'));
+
+            $.ajax({
+                url: "{{ path('category_template') }}",
+                type: "GET",
+                dataType: "JSON",
+                data: {
+                    category_id: category.val()
+                },
+                success: function (templates) {
+                    var templateSelector = $("#campaign_template");
+
+                    templateSelector.html('');
+                    if(templates.length > 0){
+                        templateSelector.append('<option value>Sélectionner un template </option>');
+                        document.getElementById('campaign_newTemplate').parentNode.style.display = 'none';
+                    } else {
+                        templateSelector.append('<option value>Aucun template pour cette catégorie</option>');
+                        document.getElementById('campaign_newTemplate').parentNode.style.display = 'inline';
+                        document.getElementById('campaign_templateContent').parentNode.style.display = 'none';
+                    }
+
+                    $.each(templates, function (key, template) {
+                        templateSelector.append("<option value='" + template.id + "' data-template-body='" + template.body + "'>" + template.name + "</option>");
+                    });
+
+                },
+                error: function (err) {
+                    alert("Une erreur s'est produite lors du chargement des données.");
+                }
+            });
+        });
+
+        $("#campaign_template").change(function () {
+            if($(this).val() === null){
+                document.getElementById('campaign_templateContent').parentNode.style.display = 'none';
+            } else {
+                document.getElementById('campaign_templateContent').parentNode.style.display = 'inline';
+                CKEDITOR.instances['campaign_templateContent'].setData($(this).find(':selected').data('template-body'));
+            }
+        });
+    </script>
+{% endblock %}

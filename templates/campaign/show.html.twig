@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Campagne{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Campagne</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ campaign.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ campaign.name }}</td>
+                </tr>
+                <tr>
+                    <th>Date d'envoi</th>
+                    <td>{{ campaign.sendDate ? campaign.sendDate|date('d/m/Y H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Utilisateurs liés</th>
+                    <td>
+                        {% for user in campaign.users %}
+                            {{ user.fullName }} - <a href="mailto:{{ user.email }}">{{ user.email }}</a><br>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Catégorie</th>
+                    <td>{{ campaign.category.name }}</td>
+                </tr>
+                <tr>
+                    <th>Template</th>
+                    <td>{{ campaign.template ? campaign.template.name : '-' }}</td>
+                </tr>
+                <tr>
+                    <th>Contenu du template</th>
+                    <td>{{ campaign.template ? campaign.template.body|raw : '-' }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('campaign_index') }}" class="btn btn-primary">Retour</a>
+    </div>
+{% endblock %}

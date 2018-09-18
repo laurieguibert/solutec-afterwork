@@ -1,10 +1,46 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css">
 {% endblock %}
 {% block body %}
     <div class="container"><br>
         <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingFour">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Templates de mail
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseFour" class="collapse {% if "template" in app.request.headers.get('referer') %}show{% endif %}" aria-labelledby="headingFour" data-parent="#accordionExample">
+                    <div class="card-body">
+                        {{ render(controller(
+                            'App\\Controller\\TemplateController::index'
+                        )) }}
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingFive">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            Listes de diffusion
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseFive" class="collapse {% if "mailing/list" in app.request.headers.get('referer') %}show{% endif %}" aria-labelledby="headingFive" data-parent="#accordionExample">
+                    <div class="card-body">
+                        {{ render(controller(
+                            'App\\Controller\\MailingListController::index'
+                        )) }}
+                    </div>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-header" id="headingOne">
                     <h5 class="mb-0">
@@ -14,7 +50,7 @@
                     </h5>
                 </div>
 
-                <div id="collapseOne" class="collapse {% if "category" not in app.request.headers.get('referer') and "civility" not in app.request.headers.get('referer') %}show{% endif %}" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div id="collapseOne" class="collapse {% if "site" in app.request.headers.get('referer') %}show{% endif %}" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
                         {{ render(controller(
                             'App\\Controller\\SiteController::index'
@@ -54,28 +90,16 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header" id="headingFour">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                            Templates de mail
-                        </button>
-                    </h5>
-                </div>
-                <div id="collapseFour" class="collapse {% if "template" in app.request.headers.get('referer') %}show{% endif %}" aria-labelledby="headingFour" data-parent="#accordionExample">
-                    <div class="card-body">
-                        {{ render(controller(
-                            'App\\Controller\\TemplateController::index'
-                        )) }}
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.js"></script>
     <script>
+        document.getElementById('mailing_list_users').setAttribute('data-live-search', "true");
+        document.getElementById('mailing_list_users').setAttribute('title', "Sélectionnez les consultants");
+        //$('#mailing_list_users').selectpicker();
     </script>
 {% endblock %}

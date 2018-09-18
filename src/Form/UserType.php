@@ -28,6 +28,14 @@ class UserType extends AbstractType
                     'style' => 'font-size :14px;'
                 ],
             ])
+            ->add('civility', EntityType::class, [
+                'class' => 'App\Entity\Civility',
+                'choice_label' => 'name',
+                'label' => 'Civilité',
+                'label_attr' => [
+                    'style' => 'font-size :14px;'
+                ],
+            ])
             ->add('firstName', TextType::class, [
                 'required' => true,
                 'label' => 'Prénom',
@@ -54,14 +62,6 @@ class UserType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Téléphone'
                 ],
-                'label_attr' => [
-                    'style' => 'font-size :14px;'
-                ],
-            ])
-            ->add('civility', EntityType::class, [
-                'class' => 'App\Entity\Civility',
-                'choice_label' => 'name',
-                'label' => 'Civilité',
                 'label_attr' => [
                     'style' => 'font-size :14px;'
                 ],

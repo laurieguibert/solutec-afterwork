@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('civility_delete', {'id': civility.id}) }}" onsubmit="return confirm('Etes-vous certain de vouloir supprimer cet élément ?');" style="display: inline-block;">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ civility.id) }}">
-    <button class="btn btn-danger">Supprimer</button>
+    <button class="btn btn-danger btn-sm">Supprimer</button>
 </form>

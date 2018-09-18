@@ -1,52 +1,47 @@
-{% extends 'base.html.twig' %}
+<div class="container">
+    <h3>Liste de diffusions</h3>
 
-{% block title %}MailingList index{% endblock %}
-
-{% block body %}
-    <div class="container">
-        <h1>Liste de diffusions</h1>
-
-        <table class="table">
-            <thead>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Utilisateurs liés à la liste</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for mailing_list in mailing_lists %}
             <tr>
-                <th>Nom</th>
-                <th>Utilisateurs liés à la liste</th>
-                <th>Date de création</th>
-                <th>actions</th>
+                <td>{{ mailing_list.name }}</td>
+                <td>{% for user in mailing_list.users %}
+                        <ul>
+                            <li>{{ user.fullName }} - <a href="mailto:{{ user.email }}">{{ user.email }}</a></li>
+                        </ul>
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ path('mailing_list_edit', {'id': mailing_list.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    {{ include('mailing_list/_delete_form.html.twig') }}
+                </td>
             </tr>
-            </thead>
-            <tbody>
-            {% for mailing_list in mailing_lists %}
-                <tr>
-                    <td>{{ mailing_list.name }}</td>
-                    <td>{% for userMailingList in mailing_list.userMailingLists %}
-                            <ul>
-                                <li>{{ userMailingList.user.fullName }} - <a href="mailto:{{ userMailingList.user.email }}">{{ userMailingList.user.email }}</a></li>
-                            </ul>
-                        {% endfor %}
-                    </td>
-                    <td>{{ mailing_list.createdAt ? mailing_list.createdAt|date('d/m/Y') : '' }}</td>
-                    <td>
-                        <a href="{{ path('mailing_list_show', {'id': mailing_list.id}) }}" class="btn btn-primary">Détails</a>
-                        <a href="{{ path('mailing_list_edit', {'id': mailing_list.id}) }}" class="btn btn-warning">Modifier</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="5">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-        <input id="new" type="button" onClick="showForm()" value="Créer une nouvelle liste" class="btn btn-success"/>
-        <div id="add_form" hidden>
-            {{ include('mailing_list/_form.html.twig') }}
-        </div>
+    <input id="new" type="button" onClick="showForm()" value="Créer une nouvelle liste" class="btn btn-success"/>
+    <div id="add_form" hidden>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+            <button class="btn btn-success float-right">{{ button_label|default('Enregistrer') }}</button>
+        {{ form_end(form) }}
+
     </div>
-{% endblock %}
+</div>
 {% block javascripts %}
-    {{ parent() }}
     <script>
         function showForm()
         {

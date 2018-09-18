@@ -2,9 +2,21 @@
 
 {% block title %}Nouveau site{% endblock %}
 
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/css/new_afterwork.css"/>
+{% endblock %}
+
 {% block body %}
-    <h1>Ajout d'un nouveau site</h1>
-    <div class="col-md-3">
-        {{ include('site/_form.html.twig') }}
+<div class="container">
+    <div class="login-form">
+        <div class="main-div">
+            <div class="panel text-center">
+                <h1>Ajout d'un nouveau site</h1>
+            </div>
+            {{ include('site/_form.html.twig') }}
+        </div>
     </div>
+</div>
 {% endblock %}

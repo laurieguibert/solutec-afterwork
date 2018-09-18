@@ -2,15 +2,29 @@
     background-color: whitesmoke
 }
 
+.btn-warning {
+    color: white;
+}
+
 .lobster {
     font-family: 'Lobster', cursive;
 }
 
 #logo{
     height:25px;
-    width:10%;
+    width:7%;
 }
 
 .close:active, .close:visited, .close:focus {
  outline-style:none;
+}
+
+
+#campaign_users, #mailing_list_users{
+    height: 250px;
+}
+
+label.required:before {
+    content: "* ";
+    color:red;
 }

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des campagnes{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-10 mx-auto">
+        <h5 class="section-title h1 lobster pt-3">Campagnes</h5>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Utilisateurs concernés</th>
+                    <th>Date d'envoi</th>
+                    <th>Catégorie</th>
+                    <th>Template</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for campaign in campaigns %}
+                <tr>
+                    <td>{{ campaign.name }}</td>
+                    <td>{% for user in campaign.users %}
+                            <ul>
+                                <li>{{ user.fullName }} - <a href="mailto:{{ user.email }}">{{ user.email }}</a></li>
+                            </ul>
+                        {% endfor %}</td>
+                    <td>{{ campaign.sendDate ? campaign.sendDate|date('d/m/Y H:i:s') : '' }}</td>
+                    <td>{{ campaign.category.name }}</td>
+                    <td>{{ campaign.template ? campaign.template.name : '-' }}</td>
+                    <td>
+                        <a href="{{ path('campaign_show', {'id': campaign.id}) }}" class="btn btn-primary btn-sm"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                        {{ include('campaign/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun résultat</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('campaign_new') }}" class="btn btn-success">Nouvelle campagne</a>
+    </div>
+</div>
+{% endblock %}

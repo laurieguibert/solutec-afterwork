@@ -15,9 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MailingListController extends Controller
 {
-    /**
-     * @Route("/", name="mailing_list_index", methods="GET|POST")
-     */
     public function index(Request $request, MailingListRepository $mailingListRepository): Response
     {
         $mailingList = new MailingList();
@@ -28,8 +25,6 @@ class MailingListController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($mailingList);
             $em->flush();
-
-            return $this->redirectToRoute('mailing_list_index');
         }
 
         return $this->render('mailing_list/index.html.twig', [
@@ -41,7 +36,7 @@ class MailingListController extends Controller
     /**
      * @Route("/new", name="mailing_list_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    /**public function new(Request $request): Response
     {
         $mailingList = new MailingList();
         $form = $this->createForm(MailingListType::class, $mailingList);
@@ -52,14 +47,14 @@ class MailingListController extends Controller
             $em->persist($mailingList);
             $em->flush();
 
-            return $this->redirectToRoute('mailing_list_index');
+            return $this->redirectToRoute('admin_index');
         }
 
         return $this->render('mailing_list/new.html.twig', [
             'mailing_list' => $mailingList,
             'form' => $form->createView(),
         ]);
-    }
+    }**/
 
     /**
      * @Route("/{id}", name="mailing_list_show", methods="GET")
@@ -80,7 +75,7 @@ class MailingListController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('mailing_list_edit', ['id' => $mailingList->getId()]);
+            return $this->redirectToRoute('admin_index');
         }
 
         $users = $this->getDoctrine()->getRepository('App:User')->findAll();
@@ -103,6 +98,6 @@ class MailingListController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('mailing_list_index');
+        return $this->redirectToRoute('admin_index');
     }
 }

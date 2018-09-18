@@ -15,12 +15,22 @@ class TemplateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('object', TextType::class)
-            ->add('body', CKEditorType::class)
             ->add('category', EntityType::class, [
                 'class' => 'App\Entity\Category',
                 'choice_label' => 'name',
+                'required' => true,
+                'label' => 'Catégorie'
+            ])
+            ->add('name', TextType::class, [
+                'label' => 'Nom',
+                'required' => true
+            ])
+            ->add('object', TextType::class, [
+                'label' => 'Objet du mail',
+                'required' => true
+            ])
+            ->add('body', CKEditorType::class, [
+                'label' => 'Contenu du mail',
                 'required' => true
             ])
         ;

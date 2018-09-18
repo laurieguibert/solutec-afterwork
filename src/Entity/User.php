@@ -34,11 +34,6 @@ class User
     private $civility;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserMailingList", mappedBy="user")
-     */
-    private $userMailingLists;
-
-    /**
      * @ORM\Column(type="string", length=30)
      */
     private $firstName;
@@ -51,11 +46,11 @@ class User
     /**
      * @ORM\Column(type="string", length=15, nullable=true)
      * @Assert\Regex(
-     *     pattern="/^0[1-9][0-9]{8}$/", message="Le numéro de téléphone ne peut contenir que des chiffres."
+     *     pattern="/^0[1-9]([. ]?[0-9]{2}){4}$/", message="Le numéro de téléphone ne peut contenir que des chiffres."
      * )
      * @Assert\Length(
      *      min =10,
-     *      max = 10
+     *      max = 14
      * )
      */
     private $phone;
@@ -67,7 +62,7 @@ class User
     private $site;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @var string
      */
     private $image;
@@ -83,10 +78,22 @@ class User
      */
     private $updatedAt;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Campaign", mappedBy="users")
+     */
+    private $campaigns;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\MailingList", mappedBy="users")
+     */
+    private $mailingLists;
+
     public function __construct()
     {
         $this->userMailingLists = new ArrayCollection();
         $this->updatedAt = null;
+        $this->campaigns = new ArrayCollection();
+        $this->mailingLists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,37 +121,6 @@ class User
     public function setCivility(?Civility $civility): self
     {
         $this->civility = $civility;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|UserMailingList[]
-     */
-    public function getUserMailingLists(): Collection
-    {
-        return $this->userMailingLists;
-    }
-
-    public function addUserMailingList(UserMailingList $userMailingList): self
-    {
-        if (!$this->userMailingLists->contains($userMailingList)) {
-            $this->userMailingLists[] = $userMailingList;
-            $userMailingList->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserMailingList(UserMailingList $userMailingList): self
-    {
-        if ($this->userMailingLists->contains($userMailingList)) {
-            $this->userMailingLists->removeElement($userMailingList);
-            // set the owning side to null (unless already changed)
-            if ($userMailingList->getUser() === $this) {
-                $userMailingList->setUser(null);
-            }
-        }
 
         return $this;
     }
@@ -223,5 +199,61 @@ class User
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * @return Collection|Campaign[]
+     */
+    public function getCampaigns(): Collection
+    {
+        return $this->campaigns;
+    }
+
+    public function addCampaign(Campaign $campaign): self
+    {
+        if (!$this->campaigns->contains($campaign)) {
+            $this->campaigns[] = $campaign;
+            $campaign->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCampaign(Campaign $campaign): self
+    {
+        if ($this->campaigns->contains($campaign)) {
+            $this->campaigns->removeElement($campaign);
+            $campaign->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MailingList[]
+     */
+    public function getMailingLists(): Collection
+    {
+        return $this->mailingLists;
+    }
+
+    public function addMailingList(MailingList $mailingList): self
+    {
+        if (!$this->mailingLists->contains($mailingList)) {
+            $this->mailingLists[] = $mailingList;
+            $mailingList->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMailingList(MailingList $mailingList): self
+    {
+        if ($this->mailingLists->contains($mailingList)) {
+            $this->mailingLists->removeElement($mailingList);
+            $mailingList->removeUser($this);
+        }
+
+        return $this;
     }
 }
