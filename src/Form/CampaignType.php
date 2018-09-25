@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class CampaignType extends AbstractType
 {
@@ -66,6 +67,10 @@ class CampaignType extends AbstractType
                     'style' => 'font-size :14px;'
                 ],
             ])
+            ->add('imageFile', VichFileType::class, [
+                'required' => false,
+                'label' => 'Pièce jointe'
+            ]);
             /*->add('template', CKEditorType::class, [
                 "label" => "Contenu du mail",
                 "mapped" => false,
@@ -125,7 +130,8 @@ class CampaignType extends AbstractType
             'label_attr' => [
                 'style' => 'font-size :14px;'
             ],
-            'label' => 'Template personnalisé'
+            'label' => 'Template personnalisé',
+            'required' => true
         ]);
     }
 
@@ -151,6 +157,7 @@ class CampaignType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Campaign::class,
+            'csrf_protection' => false,
         ]);
     }
 }

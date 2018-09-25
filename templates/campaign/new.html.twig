@@ -47,6 +47,7 @@
             var category = $(this);
             $("#campaign_template").prepend($('<option></option>').html('Chargement...'));
 
+
             $.ajax({
                 url: "{{ path('category_template') }}",
                 type: "GET",
@@ -84,6 +85,16 @@
             } else {
                 document.getElementById('campaign_templateContent').parentNode.style.display = 'inline';
                 CKEDITOR.instances['campaign_templateContent'].setData($(this).find(':selected').data('template-body'));
+            }
+        });
+
+        $("form").submit( function(e) {
+            if(document.getElementById('campaign_newTemplate').parentNode.style.display === 'inline'){
+                var messageLength = CKEDITOR.instances['campaign_newTemplate'].getData().replace(/<[^>]*>/gi, '').length;
+                if( !messageLength ) {
+                    alert( 'Le template ne peut pas être vide.' );
+                    e.preventDefault();
+                }
             }
         });
     </script>

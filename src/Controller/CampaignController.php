@@ -35,9 +35,15 @@ class CampaignController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $campaign->setSendDate(new \DateTime("now"));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($campaign);
+            $em->flush();
+
             foreach ($campaign->getUsers() as $user){
                 if($form["template"]->getData() !== null){
-                    $message = (new \Swift_Message('test'))
+                    $message = (new \Swift_Message($form['name']->getData()))
                         ->setFrom('laurie.guibert@consultants-solutec.fr')
                         ->setTo($user->getEmail())
                         ->setBody(
@@ -49,22 +55,18 @@ class CampaignController extends Controller
                         )
                     ;
                 } else {
-                    $message = (new \Swift_Message('test'))
+                    $message = (new \Swift_Message($form['name']->getData()))
                         ->setFrom('laurie.guibert@consultants-solutec.fr')
                         ->setTo($user->getEmail())
                         ->setBody($form['newTemplate']->getData(),
                             'text/html'
                         )
+                        ->attach(\Swift_Attachment::fromPath($this->get('kernel')->getProjectDir() . '/public/files/campaigns/' . $campaign->getFile())) ;
                     ;
                 }
 
                 $mailer->send($message);
             }
-
-            $campaign->setSendDate(new \DateTime("now"));
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($campaign);
-            $em->flush();
 
             return $this->redirectToRoute('campaign_index');
         }

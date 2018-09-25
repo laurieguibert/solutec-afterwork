@@ -3,8 +3,8 @@
 {% block title %}Liste des campagnes{% endblock %}
 
 {% block body %}
-<div class="row">
-    <div class="col-md-10 mx-auto">
+<div class="row mr-0">
+    <div class="col-md-11 mx-auto">
         <h5 class="section-title h1 lobster pt-3">Campagnes</h5>
 
         <table class="table">
@@ -12,6 +12,7 @@
                 <tr>
                     <th>Nom</th>
                     <th>Utilisateurs concernés</th>
+                    <th>Pièce jointe</th>
                     <th>Date d'envoi</th>
                     <th>Catégorie</th>
                     <th>Template</th>
@@ -27,6 +28,12 @@
                                 <li>{{ user.fullName }} - <a href="mailto:{{ user.email }}">{{ user.email }}</a></li>
                             </ul>
                         {% endfor %}</td>
+                    <td>{% if campaign.file %}
+                        <a href="{{ vich_uploader_asset(campaign, 'imageFile') }}">{{ campaign.file }}</a>
+                        {% else %}
+                        Aucune
+                        {% endif %}
+                    </td>
                     <td>{{ campaign.sendDate ? campaign.sendDate|date('d/m/Y H:i:s') : '' }}</td>
                     <td>{{ campaign.category.name }}</td>
                     <td>{{ campaign.template ? campaign.template.name : '-' }}</td>

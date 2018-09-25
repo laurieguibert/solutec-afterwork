@@ -1,6 +1,6 @@
 <p>Bonjour {{ user.firstname }},</p>
 
-<p>Tu es convi&eacute;(e) au premier Afterwork de cette rentr&eacute;e&nbsp;!</p>
+<p>Tu es convi&eacute;{{ user.civility.id != 2 ? 'e' : '' }} au premier Afterwork de cette rentr&eacute;e&nbsp;!</p>
 
 <p>&nbsp;</p>
 
