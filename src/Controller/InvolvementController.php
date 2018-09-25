@@ -12,6 +12,9 @@ class InvolvementController extends Controller
 {
     /**
      * @Route("/involvement", name="involvement")
+     * @return Response
+     *
+     * Liste toutes les participations des consultants aux afterworks
      */
     public function index()
     {
@@ -22,6 +25,11 @@ class InvolvementController extends Controller
 
     /**
      * @Route("/involvement/response", name="involvement_ajax_response")
+     * @param Request $request
+     * @return Response
+     *
+     * Requête ajax
+     * Modifie la réponse d'un consultant concernant sa participation à un afterwork
      */
     public function changeUserResponse(Request $request){
         $em = $this->getDoctrine()->getManager();

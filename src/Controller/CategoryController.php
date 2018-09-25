@@ -12,9 +12,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("admin/category")
+ *
+ * CRUD catégorie
  */
 class CategoryController extends Controller
 {
+    /**
+     * @param CategoryRepository $categoryRepository
+     * @return Response
+     *
+     * Liste toutes les catégories
+     */
     public function index(CategoryRepository $categoryRepository): Response
     {
         return $this->render('category/index.html.twig', ['categories' => $categoryRepository->findAll()]);
@@ -22,6 +30,10 @@ class CategoryController extends Controller
 
     /**
      * @Route("/new", name="category_new", methods="GET|POST")
+     * @param Request $request
+     * @return Response
+     *
+     * Créer une nouvelle catégorie de campagnes
      */
     public function new(Request $request): Response
     {
@@ -45,6 +57,10 @@ class CategoryController extends Controller
 
     /**
      * @Route("/{id}", name="category_show", methods="GET")
+     * @param Category $category
+     * @return Response
+     *
+     * Affiche une catégorie
      */
     public function show(Category $category): Response
     {
@@ -53,6 +69,11 @@ class CategoryController extends Controller
 
     /**
      * @Route("/{id}/edit", name="category_edit", methods="GET|POST")
+     * @param Request $request
+     * @param Category $category
+     * @return Response
+     *
+     * Modifie une catégorie
      */
     public function edit(Request $request, Category $category): Response
     {
@@ -73,6 +94,11 @@ class CategoryController extends Controller
 
     /**
      * @Route("/{id}", name="category_delete", methods="DELETE")
+     * @param Request $request
+     * @param Category $category
+     * @return Response
+     *
+     * Supprime une catégorie
      */
     public function delete(Request $request, Category $category): Response
     {

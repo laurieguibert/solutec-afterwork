@@ -82,6 +82,12 @@ class CampaignType extends AbstractType
         $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
     }
 
+    /**
+     * @param FormInterface $form
+     * @param Category|null $category
+     *
+     * Ajoute le champ catégorie et les templates qui y sont liés lors du changement de la valeur de la catégorie
+     */
     protected function addElements(FormInterface $form, Category $category = null) {
         $form->add('category', EntityType::class, array(
             'required' => true,

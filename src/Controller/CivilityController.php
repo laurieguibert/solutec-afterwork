@@ -17,6 +17,10 @@ class CivilityController extends Controller
 {
     /**
      * @Route("/", name="civility_index", methods="GET")
+     * @param CivilityRepository $civilityRepository
+     * @return Response
+     *
+     * Liste toutes les civilités
      */
     public function index(CivilityRepository $civilityRepository): Response
     {
@@ -25,6 +29,10 @@ class CivilityController extends Controller
 
     /**
      * @Route("/new", name="civility_new", methods="GET|POST")
+     * @param Request $request
+     * @return Response
+     *
+     * Crée une civilité
      */
     public function new(Request $request): Response
     {
@@ -48,6 +56,10 @@ class CivilityController extends Controller
 
     /**
      * @Route("/{id}", name="civility_show", methods="GET")
+     * @param Civility $civility
+     * @return Response
+     *
+     * Affiche une civilité
      */
     public function show(Civility $civility): Response
     {
@@ -56,6 +68,11 @@ class CivilityController extends Controller
 
     /**
      * @Route("/{id}/edit", name="civility_edit", methods="GET|POST")
+     * @param Request $request
+     * @param Civility $civility
+     * @return Response
+     *
+     * Modifie une civilité
      */
     public function edit(Request $request, Civility $civility): Response
     {
@@ -76,6 +93,11 @@ class CivilityController extends Controller
 
     /**
      * @Route("/{id}", name="civility_delete", methods="DELETE")
+     * @param Request $request
+     * @param Civility $civility
+     * @return Response
+     *
+     * Supprime une civilité
      */
     public function delete(Request $request, Civility $civility): Response
     {

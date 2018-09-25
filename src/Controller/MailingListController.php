@@ -12,9 +12,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/mailing/list")
+ *
+ * CRUD Liste de diffusion
  */
 class MailingListController extends Controller
 {
+    /**
+     * @param Request $request
+     * @param MailingListRepository $mailingListRepository
+     * @return Response
+     *
+     * Liste toutes les listes de diffusion et générer le formulaire de création sur la même page (ajax)
+     */
     public function index(Request $request, MailingListRepository $mailingListRepository): Response
     {
         $mailingList = new MailingList();
@@ -34,30 +43,11 @@ class MailingListController extends Controller
     }
 
     /**
-     * @Route("/new", name="mailing_list_new", methods="GET|POST")
-     */
-    /**public function new(Request $request): Response
-    {
-        $mailingList = new MailingList();
-        $form = $this->createForm(MailingListType::class, $mailingList);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($mailingList);
-            $em->flush();
-
-            return $this->redirectToRoute('admin_index');
-        }
-
-        return $this->render('mailing_list/new.html.twig', [
-            'mailing_list' => $mailingList,
-            'form' => $form->createView(),
-        ]);
-    }**/
-
-    /**
      * @Route("/{id}", name="mailing_list_show", methods="GET")
+     * @param MailingList $mailingList
+     * @return Response
+     *
+     * Affiche une liste de diffusion selon son id
      */
     public function show(MailingList $mailingList): Response
     {
@@ -66,6 +56,11 @@ class MailingListController extends Controller
 
     /**
      * @Route("/{id}/edit", name="mailing_list_edit", methods="GET|POST")
+     * @param Request $request
+     * @param MailingList $mailingList
+     * @return Response
+     *
+     * Modifie une liste de diffusion
      */
     public function edit(Request $request, MailingList $mailingList): Response
     {
@@ -89,6 +84,11 @@ class MailingListController extends Controller
 
     /**
      * @Route("/{id}", name="mailing_list_delete", methods="DELETE")
+     * @param Request $request
+     * @param MailingList $mailingList
+     * @return Response
+     *
+     * Supprime une liste de diffusion
      */
     public function delete(Request $request, MailingList $mailingList): Response
     {

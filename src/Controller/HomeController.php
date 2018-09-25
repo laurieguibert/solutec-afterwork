@@ -8,17 +8,22 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Form\UserType;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 class HomeController extends Controller
 {
+    /**
+     * Default routing
+     * @param Environment $twig
+     * @return Response
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     *
+     * Affiche la page d'accueil avec un compteur jusqu'au prochain afterwork
+     */
     public function index(Environment $twig){
         $nextAfterwork = $this->getDoctrine()->getRepository('App:Afterwork')->findOneByDateField();
         return new Response($twig->render('home/index.html.twig', [

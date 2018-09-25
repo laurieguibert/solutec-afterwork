@@ -20,6 +20,9 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class AdminController
  * @package App\Controller
  * @Route("/admin")
+ *
+ * Permet d'afficher la partie administration du site avec gestion des templates, des listes de mailing, des sites,
+ * des catégories et des civilités
  */
 class AdminController extends Controller
 {

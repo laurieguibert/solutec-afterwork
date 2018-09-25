@@ -13,11 +13,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/campaign")
+ *
+ * CRUD campagne de mailing
  */
 class CampaignController extends Controller
 {
     /**
      * @Route("/", name="campaign_index", methods="GET")
+     *
+     * Liste toutes les campagnes de mailing
      */
     public function index(CampaignRepository $campaignRepository): Response
     {
@@ -26,6 +30,10 @@ class CampaignController extends Controller
 
     /**
      * @Route("/new", name="campaign_new", methods="GET|POST")
+     *
+     * Crée un nouvelle campagne et envoie un mail aux consultants concernés selon :
+     *      - soit un template existant
+     *      - soit un template personnalisé créé via le formulaire de création de campagne.
      */
     public function new(Request $request, \Swift_Mailer $mailer): Response
     {
@@ -80,6 +88,8 @@ class CampaignController extends Controller
 
     /**
      * @Route("/{id}", name="campaign_show", methods="GET")
+     *
+     * Affiche une campagne de mailing
      */
     public function show(Campaign $campaign): Response
     {
@@ -88,6 +98,8 @@ class CampaignController extends Controller
 
     /**
      * @Route("/{id}/edit", name="campaign_edit", methods="GET|POST")
+     *
+     * Modifie une campagne de mailing
      */
     public function edit(Request $request, Campaign $campaign): Response
     {
@@ -108,6 +120,8 @@ class CampaignController extends Controller
 
     /**
      * @Route("/{id}", name="campaign_delete", methods="DELETE")
+     *
+     * Supprime une campagne de mailing
      */
     public function delete(Request $request, Campaign $campaign): Response
     {
@@ -122,6 +136,9 @@ class CampaignController extends Controller
 
     /**
      * @Route("/category/template", name="category_template", methods="GET")
+     *
+     * Récupère les templates de mails liés à la catégorie de la campagne
+     * Requête ajax
      */
     public function listTemplateOfCategoryAction(Request $request)
     {

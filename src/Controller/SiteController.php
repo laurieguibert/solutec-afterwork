@@ -12,9 +12,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("admin/site")
+ *
+ * CRUD Site
  */
 class SiteController extends Controller
 {
+    /**
+     * @param SiteRepository $siteRepository
+     * @return Response
+     *
+     * Liste tous les sites
+     */
     public function index(SiteRepository $siteRepository): Response
     {
         return $this->render('site/index.html.twig', ['sites' => $siteRepository->findAll()]);
@@ -22,6 +30,10 @@ class SiteController extends Controller
 
     /**
      * @Route("/new", name="site_new", methods="GET|POST")
+     * @param Request $request
+     * @return Response
+     *
+     * Crée un site
      */
     public function new(Request $request): Response
     {
@@ -45,6 +57,10 @@ class SiteController extends Controller
 
     /**
      * @Route("/{id}", name="site_show", methods="GET")
+     * @param Site $site
+     * @return Response
+     *
+     * Affiche un site
      */
     public function show(Site $site): Response
     {
@@ -53,6 +69,11 @@ class SiteController extends Controller
 
     /**
      * @Route("/{id}/edit", name="site_edit", methods="GET|POST")
+     * @param Request $request
+     * @param Site $site
+     * @return Response
+     *
+     * Modifie un site
      */
     public function edit(Request $request, Site $site): Response
     {
@@ -73,6 +94,11 @@ class SiteController extends Controller
 
     /**
      * @Route("/{id}", name="site_delete", methods="DELETE")
+     * @param Request $request
+     * @param Site $site
+     * @return Response
+     *
+     * Supprime un site
      */
     public function delete(Request $request, Site $site): Response
     {

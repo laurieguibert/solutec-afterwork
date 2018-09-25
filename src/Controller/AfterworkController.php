@@ -14,11 +14,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/afterwork")
+ *
+ * CRUD Afterwork
  */
 class AfterworkController extends Controller
 {
     /**
      * @Route("/", name="afterwork_index", methods="GET")
+     *
+     * Liste tous les afterworks
      */
     public function index(AfterworkRepository $afterworkRepository): Response
     {
@@ -27,6 +31,8 @@ class AfterworkController extends Controller
 
     /**
      * @Route("/new", name="afterwork_new", methods="GET|POST")
+     *
+     * Crée un nouvel afterwork avec envoi de mails à tous les consultants concernés
      */
     public function new(Request $request, \Swift_Mailer $mailer): Response
     {
@@ -43,6 +49,7 @@ class AfterworkController extends Controller
                 $involvement->setResponse('Sans réponse');
                 $em->persist($involvement);
 
+                // Envoyer une invitation Calendar --> Non fonctionnel
                 /*$vCalendar = new \Eluceo\iCal\Component\Calendar('myCalendar');
                 $vEvent = new \Eluceo\iCal\Component\Event();
 
@@ -89,6 +96,8 @@ class AfterworkController extends Controller
 
     /**
      * @Route("/{id}", name="afterwork_show", methods="GET")
+     *
+     * Affiche un afterwork
      */
     public function show(Afterwork $afterwork): Response
     {
@@ -97,6 +106,8 @@ class AfterworkController extends Controller
 
     /**
      * @Route("/{id}/edit", name="afterwork_edit", methods="GET|POST")
+     *
+     * Modifie un afterwork
      */
     public function edit(Request $request, Afterwork $afterwork): Response
     {
@@ -117,6 +128,8 @@ class AfterworkController extends Controller
 
     /**
      * @Route("/{id}", name="afterwork_delete", methods="DELETE")
+     *
+     * Supprime un afterwork
      */
     public function delete(Request $request, Afterwork $afterwork): Response
     {

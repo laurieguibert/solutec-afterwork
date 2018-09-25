@@ -13,9 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/template")
+ *
+ * CRUD Template de mails
  */
 class TemplateController extends Controller
 {
+    /**
+     * @param TemplateRepository $templateRepository
+     * @return Response
+     *
+     * Liste tous les templates de mails
+     */
     public function index(TemplateRepository $templateRepository): Response
     {
         return $this->render('template/index.html.twig', ['templates' => $templateRepository->findAll()]);
@@ -23,6 +31,10 @@ class TemplateController extends Controller
 
     /**
      * @Route("/new", name="template_new", methods="GET|POST")
+     * @param Request $request
+     * @return Response
+     *
+     * Crée un template de mail
      */
     public function new(Request $request): Response
     {
@@ -49,6 +61,10 @@ class TemplateController extends Controller
 
     /**
      * @Route("/{id}", name="template_show", methods="GET")
+     * @param Template $template
+     * @return Response
+     *
+     * Affiche un template de mails
      */
     public function show(Template $template): Response
     {
@@ -57,6 +73,11 @@ class TemplateController extends Controller
 
     /**
      * @Route("/{id}/edit", name="template_edit", methods="GET|POST")
+     * @param Request $request
+     * @param Template $template
+     * @return Response
+     *
+     * Modifie un template de mails
      */
     public function edit(Request $request, Template $template): Response
     {
@@ -77,6 +98,11 @@ class TemplateController extends Controller
 
     /**
      * @Route("/{id}", name="template_delete", methods="DELETE")
+     * @param Request $request
+     * @param Template $template
+     * @return Response
+     *
+     * Supprime un template de mails
      */
     public function delete(Request $request, Template $template): Response
     {

@@ -12,11 +12,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/user")
+ *
+ * CRUD User
  */
 class UserController extends Controller
 {
     /**
      * @Route("/", name="user_index", methods="GET")
+     * @param UserRepository $userRepository
+     * @return Response
+     *
+     * Liste tous les utilisateurs/consultants
      */
     public function index(UserRepository $userRepository): Response
     {
@@ -25,6 +31,10 @@ class UserController extends Controller
 
     /**
      * @Route("/new", name="user_new", methods="GET|POST")
+     * @param Request $request
+     * @return Response
+     *
+     * Crée un nouvel utilisateur/consultant
      */
     public function new(Request $request): Response
     {
@@ -48,6 +58,10 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}", name="user_show", methods="GET")
+     * @param User $user
+     * @return Response
+     *
+     * Affiche un utilisateur/consultant
      */
     public function show(User $user): Response
     {
@@ -56,6 +70,11 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}/edit", name="user_edit", methods="GET|POST")
+     * @param Request $request
+     * @param User $user
+     * @return Response
+     *
+     * Modifie un utilisateur/consultant
      */
     public function edit(Request $request, User $user): Response
     {
@@ -76,6 +95,11 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}", name="user_delete", methods="DELETE")
+     * @param Request $request
+     * @param User $user
+     * @return Response
+     *
+     * Supprime un utilisateur/consultant
      */
     public function delete(Request $request, User $user): Response
     {
