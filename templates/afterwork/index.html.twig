@@ -16,14 +16,14 @@
                                 {% if afterwork.image %}
                                     <img class="card-img-top" src="{{ vich_uploader_asset(afterwork, 'imageFile') }}" style="height: 250px;">
                                 {% else %}
-                                    <img class="card-img-top" src="/images/wine.jpg" style="height: 250px;">
+                                    <img class="card-img-top" src="/images/default/question.jpg" style="height: 250px;">
                                 {% endif %}
                                 <div class="card-body text-center">
                                     <p class="card-text"><b>{{ afterwork.name }}</b></p>
                                     <p class="card-text">Le {{ afterwork.date.format("d/m/Y à H:i") }}</p>
                                     <p class="card-text"><i>{{ afterwork.placeName }}<br>{{ afterwork.address }} <br> {{ afterwork.zipCode }} {{ afterwork.city }}</i></p>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        {% if afterwork.date.format("d/m/Y") < "now"|date("d/m/Y") %}
+                                        {% if afterwork.date|date("d/m/Y H:i:s") < "now"|date("d/m/Y H:i:s") %}
                                             <div class="btn-group">
                                                 <a href="{{ path('afterwork_show', {'id': afterwork.id}) }}" style="color: white;"><button type="button" class="btn btn-sm btn-secondary"><i class="fa fa-search"></i></button></a>
                                             </div>

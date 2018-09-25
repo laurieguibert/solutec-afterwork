@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -50,7 +52,7 @@ class Afterwork
     private $placeName;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @var string
      */
     private $image;
@@ -65,6 +67,16 @@ class Afterwork
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Involvement", mappedBy="afterwork")
+     */
+    private $involvements;
+
+    public function __construct()
+    {
+        $this->involvements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -165,5 +177,36 @@ class Afterwork
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * @return Collection|Involvement[]
+     */
+    public function getInvolvements(): Collection
+    {
+        return $this->involvements;
+    }
+
+    public function addInvolvement(Involvement $involvement): self
+    {
+        if (!$this->involvements->contains($involvement)) {
+            $this->involvements[] = $involvement;
+            $involvement->setAfterwork($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvolvement(Involvement $involvement): self
+    {
+        if ($this->involvements->contains($involvement)) {
+            $this->involvements->removeElement($involvement);
+            // set the owning side to null (unless already changed)
+            if ($involvement->getAfterwork() === $this) {
+                $involvement->setAfterwork(null);
+            }
+        }
+
+        return $this;
     }
 }
