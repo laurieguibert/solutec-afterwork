@@ -1,3 +1,23 @@
 swiftmailer:
-    url: '%env(MAILER_URL)%'
-    spool: { type: 'memory' }
+   url: '%env(MAILER_URL)%'
+   spool: { type: 'memory' }
+
+
+
+#swiftmailer:
+    #transport:  smtp
+    #host:       mailcatcher
+    #port:   1025
+
+    #transport: sendmail
+    #host: smtp.solutec.fr #192.168.102.3
+    #username: lguibert
+    #password: fNTVn9hP
+    #encryption: ssl
+    #port: 25
+
+    #transport: gmail
+    #username:  lguibert978@gmail.com
+    #password:  'as61V9ij'
+    #port: 587
+    #encryption: tls

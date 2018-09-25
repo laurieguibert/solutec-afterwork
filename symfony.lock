@@ -80,6 +80,9 @@
     "egulias/email-validator": {
         "version": "2.1.5"
     },
+    "eluceo/ical": {
+        "version": "0.14.0"
+    },
     "fig/link-util": {
         "version": "1.0.0"
     },
