@@ -1,5 +1,7 @@
 body{
     background:url("https://hdwallsource.com/img/2014/9/subtle-blur-wallpaper-26338-27029-hd-wallpapers.jpg") no-repeat center;
+    -webkit-background-size: cover;
+    background-size: cover;
 }
 
 .container{
@@ -67,4 +69,8 @@ body{
 .vich-image a  {
     color: darkorange;
     margin-left: 10px;
+}
+
+#new_afterwork_users {
+    height: 300px;
 }

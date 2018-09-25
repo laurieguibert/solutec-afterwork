@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Afterwork;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -72,8 +74,25 @@ class NewAfterworkType extends AbstractType
                 'label_attr' => [
                     'style' => 'font-size :14px;'
                 ],
+            ])
+            ->add('users', EntityType::class, [
+                'mapped' => false,
+                'class' => 'App\Entity\User',
+                'choice_label' => 'fullName',
+                'multiple'  => true,
+                'label' => 'Consultants à inviter',
+                'label_attr' => [
+                    'style' => 'font-size :14px;'
+                ],
+            ])
+            ->add('content', CKEditorType::class, [
+                'mapped' => false,
+                'label_attr' => [
+                    'style' => 'font-size :14px;'
+                ],
+                'label' => 'Contenu du mail',
+                'required' => true
             ]);
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

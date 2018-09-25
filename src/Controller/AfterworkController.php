@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Afterwork;
+use App\Entity\Involvement;
 use App\Form\AfterworkType;
 use App\Form\NewAfterworkType;
 use App\Repository\AfterworkRepository;
@@ -27,7 +28,7 @@ class AfterworkController extends Controller
     /**
      * @Route("/new", name="afterwork_new", methods="GET|POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, \Swift_Mailer $mailer): Response
     {
         $afterwork = new Afterwork();
         $form = $this->createForm(NewAfterworkType::class, $afterwork);
@@ -35,6 +36,45 @@ class AfterworkController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            foreach($form['users']->getData() as $user){
+                $involvement = new Involvement();
+                $involvement->setUser($user);
+                $involvement->setAfterwork($afterwork);
+                $involvement->setResponse('Sans réponse');
+                $em->persist($involvement);
+
+                /*$vCalendar = new \Eluceo\iCal\Component\Calendar('myCalendar');
+                $vEvent = new \Eluceo\iCal\Component\Event();
+
+                $vEvent
+                    ->setDtStart($form['date']->getData())
+                    ->setNoTime(true)
+                    ->setSummary('Christmas')
+                ;
+
+                $vCalendar->addComponent($vEvent);
+
+                header('Content-Type: text/calendar; charset=utf-8');
+                header('Content-Disposition: attachment; filename="cal.ics"');
+
+                $vCalendar->render();
+
+                $attachment = (new \Swift_Attachment())
+                    ->setContentType('text/calendar')
+                    ->setBody($vCalendar)
+                ;*/
+
+                $message = (new \Swift_Message($form['name']->getData()))
+                    ->setFrom('laurie.guibert@consultants-solutec.fr')
+                    ->setTo($user->getEmail())
+                    ->setBody(
+                        $form['content'],
+                        'text/html'
+                    );
+                    //->attach($attachment);
+
+                $mailer->send($message);
+            }
             $em->persist($afterwork);
             $em->flush();
 
