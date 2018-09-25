@@ -88,12 +88,18 @@ class User
      */
     private $mailingLists;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Involvement", mappedBy="user")
+     */
+    private $involvements;
+
     public function __construct()
     {
         $this->userMailingLists = new ArrayCollection();
         $this->updatedAt = null;
         $this->campaigns = new ArrayCollection();
         $this->mailingLists = new ArrayCollection();
+        $this->involvements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -252,6 +258,37 @@ class User
         if ($this->mailingLists->contains($mailingList)) {
             $this->mailingLists->removeElement($mailingList);
             $mailingList->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Involvement[]
+     */
+    public function getInvolvements(): Collection
+    {
+        return $this->involvements;
+    }
+
+    public function addInvolvement(Involvement $involvement): self
+    {
+        if (!$this->involvements->contains($involvement)) {
+            $this->involvements[] = $involvement;
+            $involvement->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvolvement(Involvement $involvement): self
+    {
+        if ($this->involvements->contains($involvement)) {
+            $this->involvements->removeElement($involvement);
+            // set the owning side to null (unless already changed)
+            if ($involvement->getUser() === $this) {
+                $involvement->setUser(null);
+            }
         }
 
         return $this;

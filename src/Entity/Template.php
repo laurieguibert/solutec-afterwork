@@ -22,7 +22,7 @@ class Template
     /**
      * @ORM\Column(type="string", length=50, unique=true)
      * @Assert\Regex(
-     *     pattern="/^[a-z0-9 ]$/", message="Le nom ne peut contenir que des lettres, des chiffres ou des espaces."
+     *     pattern="/^[a-zA-Z0-9 ]*$/", message="Le nom ne peut contenir que des lettres, des chiffres ou des espaces."
      * )
      */
     private $name;
