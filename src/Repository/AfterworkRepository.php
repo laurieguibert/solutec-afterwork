@@ -36,15 +36,17 @@ class AfterworkRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Afterwork
+
+    public function findOneByDateField()
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('a.date > :val')
+            ->setParameter('val', new \DateTime("now"))
+            ->orderBy('a.date', 'ASC')
+            ->setMaxResults(1)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
+
 }
