@@ -11,14 +11,18 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
-class HomeController
+class HomeController extends Controller
 {
     public function index(Environment $twig){
-        return new Response($twig->render('home/index.html.twig'));
+        $nextAfterwork = $this->getDoctrine()->getRepository('App:Afterwork')->findOneByDateField();
+        return new Response($twig->render('home/index.html.twig', [
+            "nextAfterwork" => $nextAfterwork[0]
+        ]));
     }
 }
